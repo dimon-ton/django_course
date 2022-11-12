@@ -2,6 +2,7 @@
 {% extends 'company/base.html' %}
 
 {% block title %}สวัสดีจ้า ยินต้อนรับ สู่เว็บของเรา จ้าาาา{% endblock title %}
+{% load static %}
 
 {% block content %}
   
@@ -10,6 +11,7 @@
   <p class="fs-5 text-muted">ตอนนี้ iphone มาใหม่ หากซื้อวันนี้จะได้รับส่วนลดทัน 20%</p>
 </div>
 
+  <img src="{% static 'IMG/iphone.png' %}">
 
   {% for pd in allproduct %}
 
