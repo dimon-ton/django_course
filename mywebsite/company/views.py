@@ -13,3 +13,15 @@ def Home(req):
 
 def About(req):
     return render(req, 'company/about.html')
+
+def Contact(req):
+    if req.method == 'POST':
+        data = req.POST.copy()
+        title = data.get('title')
+        email = data.get('email')
+        detail = data.get('detail')
+        print(data)
+        print(title)
+        print(email)
+        print(detail)
+    return render(req, 'company/contact.html')
