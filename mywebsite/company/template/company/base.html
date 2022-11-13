@@ -83,6 +83,7 @@
     
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/5.2/examples/pricing/pricing.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     
@@ -101,14 +102,21 @@
         <span class="fs-4">Pimon Company</span>
       </a>
 
-      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'about-page' %}">เกี่ยวกับเรา</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="#">บริการ</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="#">ซื้อสินค้าแล้ว</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'contact-page' %}">ติดต่อเรา</a>
+        {% if user.profile.usertype == 'accountant' %}
+          <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'accountant-page' %}">รายการติดต่อ</a>
+          </nav>
+        {% else %}
+            <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+              <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'about-page' %}">เกี่ยวกับเรา</a>
+              <a class="me-3 py-2 text-dark text-decoration-none" href="#">บริการ</a>
+              <a class="me-3 py-2 text-dark text-decoration-none" href="#">ซื้อสินค้าแล้ว</a>
+              <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'contact-page' %}">ติดต่อเรา</a>
+            </nav>
+        {% endif %}
 
         {% if user.is_authenticated %}
-          <a class="me-3 py-2 text-dark text-decoration-none" href="#">สวัสดี Admin</a>
+          <a class="me-3 py-2 text-dark text-decoration-none" href="#">| สวัสดีคุณ {{user.first_name}} {{user.last_name}} ({{user.profile.usertype}})</a>
           <a class="me-3 py-2 text-dark text-decoration-none btn btn-danger text-white" href="{% url 'logout' %}">Logout</a>
         {% else %}
           <a class="me-3 py-2 text-dark text-decoration-none btn btn-primary text-white" href="{% url 'login' %}">Login</a>

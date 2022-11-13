@@ -17,6 +17,12 @@ def Home(req):
 def About(req):
     return render(req, 'company/about.html')
 
+def Accountant(req):
+    allcontact = ContactList.objects.all().order_by('-id')
+    # allcontact = ContactList.objects.all()
+    context = {'allcontact':allcontact}
+    return render(req, 'company/accountant.html', context)
+
   
 def Login(req):
 

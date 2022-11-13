@@ -6,24 +6,42 @@
 
 {% block content %}
   
-<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-  <h1 class="display-4 fw-normal">โปรโมชั่นราคาพิเศษ</h1>
-  <p class="fs-5 text-muted">ตอนนี้ iphone มาใหม่ หากซื้อวันนี้จะได้รับส่วนลดทัน 20%</p>
-</div>
+{% if user.profile.usertype == 'vip' %}
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">โปรโมชั่นราคาพิเศษ สำหรับ VIP Member เท่านั้น</h1>
+    <p class="fs-5 text-muted">ตอนนี้ iphone มาใหม่ หากซื้อวันนี้จะได้รับส่วนลดทัน 50%</p>
+  </div>
+{% elif user.profile.usertype == 'vvip' %}
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">โปรโมชั่นราคาพิเศษ สำหรับ VVIP Member เท่านั้น</h1>
+    <p class="fs-5 text-muted">ตอนนี้ iphone มาใหม่ หากซื้อวันนี้จะได้รับส่วนลดทัน 70%</p>
+  </div>
+{% elif user.profile.usertype == 'member' %}
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">โปรโมชั่นราคาพิเศษ สำหรับ Member เท่านั้น</h1>
+    <p class="fs-5 text-muted">ตอนนี้ iphone มาใหม่ หากซื้อวันนี้จะได้รับส่วนลดทัน 40%</p>
+  </div>
+{% else %}
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">โปรโมชั่นราคาพิเศษ</h1>
+    <p class="fs-5 text-muted">ตอนนี้ iphone มาใหม่ หากซื้อวันนี้จะได้รับส่วนลดทัน 20%</p>
+  </div>
+{% endif %}
+
 
   <img src="{% static 'IMG/iphone.png' %}">
 
-  {% for pd in allproduct %}
+{% for pd in allproduct %}
 
-    <h2>{{pd.title}}</h2>
-    <p>
-      <b>รายละเอียด:</b> {{pd.description}}<br>
-      <b>ราคา:</b> {{pd.price}}<br>
-      <b>เหลือใน stock:</b> {{pd.quantity}} <br>
-      <hr>
-    </p>
+  <h2>{{pd.title}}</h2>
+  <p>
+    <b>รายละเอียด:</b> {{pd.description}}<br>
+    <b>ราคา:</b> {{pd.price}}<br>
+    <b>เหลือใน stock:</b> {{pd.quantity}} <br>
+    <hr>
+  </p>
 
-  {% endfor %}
+{% endfor %}
 
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
       <div class="col">
