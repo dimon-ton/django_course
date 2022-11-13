@@ -27,3 +27,11 @@ class Product(models.Model):
 python manage.py makemigration
 python manage.py migrate
 '''
+class ContactList(models.Model):
+    title = models.CharField(max_length=400)
+    email = models.CharField(max_length=200)
+    detail = models.TextField(null=True, blank=True)
+    complete = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title + " " + self.email

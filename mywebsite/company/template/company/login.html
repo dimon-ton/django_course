@@ -1,0 +1,37 @@
+
+{% extends 'company/base.html' %}
+
+{% block title %} เข้าสู่ระบบ {% endblock title %}
+
+{% block content %}
+
+<center>
+    <h1>เข้าสู่ระบบ</h1>
+</center>
+
+{% if message %}
+
+    <h2>{{ message }}</h2>
+
+{% else %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group mb-2">
+            <label for="usrn">Username</label>
+            <input type="text" class="form-control" id="usrn" name="usrn">
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="psw">Password</label>
+            <input type="password" class="form-control" id="psw" name="psw">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+{% endif %}
+
+
+
+{% endblock content %}
