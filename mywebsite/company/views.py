@@ -24,8 +24,8 @@ def Login(req):
 
     if req.method == 'POST':
         data = req.POST.copy()
-        username = data.get('usrn')
-        password = data.get('psw')
+        username = data.get('username')
+        password = data.get('password')
 
         print(data)
         print(username)
@@ -37,7 +37,7 @@ def Login(req):
         except:
             context['message'] = 'username หรือ password ไม่ถูกต้อง'
 
-    # return render(req, 'company/login.html', context)
+    return render(req, 'company/login.html', context)
 
 def Contact(req):
 
