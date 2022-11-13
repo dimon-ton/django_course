@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import *
 from songline import Sendline
+from .emailSystem import sendthai
 from django.contrib.auth import authenticate, login 
 
 
@@ -73,6 +74,11 @@ def Contact(req):
         newrecord.save()
 
         context['message'] = 'ข้อความถูกส่งเรียบร้อย'
+
+        # send mail
+        text = 'สวัสดีคุณลูกค้า\nอีเมลของคุณคือ {} \nเราได้รับปัญหาที่ท่านสอบถามเรียบร้อยแล้วจะรีบตอบกลับโดยเร็วที่สุด'.format(email)
+
+        sendthai(email, 'Pimon Company: สอบถามปัญหา', text)
 
         # send line
         token = '4ED99HkYOoqVUEdd6SPN4OOegI3S7zqu5ZYYwi5QstA'
