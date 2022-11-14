@@ -116,7 +116,7 @@
         {% endif %}
 
         {% if user.is_authenticated %}
-          <a class="me-3 py-2 text-dark text-decoration-none" href="#">| สวัสดีคุณ {{user.first_name}} {{user.last_name}} ({{user.profile.usertype}})</a>
+          <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'profile-page' %}">| สวัสดีคุณ {{user.first_name}} {{user.last_name}} ({{user.profile.usertype}})</a>
           <a class="me-3 py-2 text-dark text-decoration-none btn btn-danger text-white" href="{% url 'logout' %}">Logout</a>
         {% else %}
           <a class="me-3 py-2 text-dark text-decoration-none btn btn-primary text-white" href="{% url 'login' %}">Login</a>

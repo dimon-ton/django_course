@@ -9,7 +9,6 @@
     <h1>สมัครสมาชิก</h1>
 </center>
 
-
 {% if warning %}
     <div class="alert alert-warning" role="alert">
         <p>{{warning}}</p>
@@ -32,15 +31,20 @@
         </div>
         {% else %}
         <div class="form-group mb-2">
+            <label for="fullname">ชื่อ-สกุล</label>
+            <input type="text" class="form-control" id="fullname" name="fullname" required>
+        </div>
+        {% endif %}
+        <div class="form-group mb-2">
             <label for="tel">หมายเลขโทรศัพท์</label>
             <input type="text" class="form-control" id="tel" name="tel" required>
         </div>
-        {% endif %}
+
         <div class="form-group mb-2">
             <label for="username">Email</label>
             <input type="text" class="form-control" id="username" name="username" required>
         </div>
-
+        
         <div class="form-group mb-2">
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>

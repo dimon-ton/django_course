@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from songline import Sendline
 from .emailSystem import sendthai
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 # def Home(req):
@@ -18,7 +19,14 @@ def Home(req):
 def About(req):
     return render(req, 'company/about.html')
 
+@login_required
 def Accountant(req):
+
+    # if req.user.profile.usertype != 'accountant':
+    allow_user = ['accountant','admin']
+    if req.user.profile.usertype not in allow_user:
+        return redirect('home-page')
+
     allcontact = ContactList.objects.all().order_by('-id')
     # allcontact = ContactList.objects.all()
     context = {'allcontact':allcontact}
@@ -134,3 +142,10 @@ def Register(req):
             context['message'] = 'username หรือ password ไม่ถูกต้อง'
 
     return render(req, 'company/register.html', context)
+
+@login_required
+def ProfilePage(req):
+    context = {}
+    profileuser = Profile.objects.get(user=req.user)
+    context['profile'] = profileuser
+    return render(req, 'company/profile.html', context)

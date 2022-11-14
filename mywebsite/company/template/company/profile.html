@@ -1,0 +1,84 @@
+
+{% extends 'company/base.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+<center>
+    <h1>My profile</h1>
+</center>
+
+{% if warning %}
+    <div class="alert alert-warning" role="alert">
+        <p>{{warning}}</p>
+    </div>
+{% endif %}
+
+
+{% if message %}
+
+    <h2>{{message}}</h2>
+
+{% else %}
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group mb-2">
+            <label for="fullname">ชื่อ-สกุล</label>
+            <input type="text" class="form-control" id="fullname" name="fullname" value="{{profile.user.first_name}}" required>
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="tel">หมายเลขโทรศัพท์</label>
+            <input type="text" class="form-control" id="tel" name="tel" value="{{profile.tel}}">
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="username">Email</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{profile.user.username}}" required>
+        </div>
+        
+        <h3>คุณมีพอยต์อยู่ {{profile.point}}</h3>
+
+        <div class="form-group mb-2">
+            <h9 class="mt-2">กรุณาเลือกสินค้าที่ชอบ</h9>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Iphone 13
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                Macbook Pro
+                </label>
+            </div>
+        </div>
+
+
+        <div class="form-group mb-2">
+            <h9 class='mt-2'>ต้องการรับข้อมูลข่าวสารหรือไม่</h9>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+              <label class="form-check-label" for="flexRadioDefault1">
+                ต้องการ
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+              <label class="form-check-label" for="flexRadioDefault2">
+                ไม่ต้องการ
+              </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">แก้ไข</button>
+    </form>
+
+{% endif %}
+
+
+
+{% endblock content %}
