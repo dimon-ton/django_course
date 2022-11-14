@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from .models import *
 from songline import Sendline
 from .emailSystem import sendthai
-from django.contrib.auth import authenticate, login 
-
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 
 # Create your views here.
 # def Home(req):
@@ -86,3 +86,51 @@ def Contact(req):
         m.sendtext('หัวข้อ:{} \nอีเมล: {} \nรายละเอียด:{}'.format(title, email, detail))
 
     return render(req, 'company/contact.html', context)
+
+
+# from django.contrib.auth.models import User
+def Register(req):
+
+    context = {}
+
+    if req.method == 'POST':
+        data = req.POST.copy()
+        fullname = data.get('fullname')
+        tel_number = data.get('tel')
+        username = data.get('username')
+        password = data.get('password')
+        password2 = data.get('password2')
+
+        print(data)
+
+       
+        try:
+            check = User.objects.get(username=username)
+            context['warning'] = 'email {} ถูกสมัครไปแล้ว กรุณาใช้ email อื่น'.format(username)
+            context['fullname'] = fullname
+            return render(req, 'company/register.html', context)
+        except:
+
+            if password != password2:
+                context['warning'] = 'กรุณากรอกรหัสผ่านให้ถูกต้องทั้งสองช่อง'
+                return render(req, 'company/register.html', context)
+
+            newuser = User()
+            newuser.username = username
+            newuser.email = username
+            newuser.first_name = fullname
+            newuser.set_password(password)
+            newuser.save()
+
+            newprofile = Profile()
+            newprofile.user = User.objects.get(username=username)
+            newprofile.tel = tel_number
+            newprofile.save()
+
+        try:
+            user = authenticate(username=username, password=password)
+            login(req, user)
+        except:
+            context['message'] = 'username หรือ password ไม่ถูกต้อง'
+
+    return render(req, 'company/register.html', context)

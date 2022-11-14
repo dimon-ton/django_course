@@ -2,7 +2,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def sendthai(sendto,subj="ทดสอบส่งเมลลล์",detail="สวัสดี!\nคุณสบายดีไหม?\n"):
+def sendthai(sendto, subj="ทดสอบส่งเมลลล์", detail="สวัสดี!\nคุณสบายดีไหม?\n"):
 
 	myemail = 'pimon.tungratogtest@gmail.com'
 	mypassword = 'dmxzrerrrrxdbocw'
