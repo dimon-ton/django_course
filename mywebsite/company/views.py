@@ -49,6 +49,7 @@ def Login(req):
         try:
             user = authenticate(username=username, password=password)
             login(req, user)
+            return redirect('profile-page')
         except:
             context['message'] = 'username หรือ password ไม่ถูกต้อง'
 
@@ -149,3 +150,31 @@ def ProfilePage(req):
     profileuser = Profile.objects.get(user=req.user)
     context['profile'] = profileuser
     return render(req, 'company/profile.html', context)
+
+import uuid
+def RessetPassword(req):
+
+    context = {}
+
+    if req.method == 'POST':
+        data = req.POST.copy()
+        username = data.get('username')
+
+        print(data)
+        print(username)
+
+
+        try:
+            user = User.objects.get(username=username)
+            u = uuid.uuid1()
+            token = str(u)
+            newreset = ResetPasswordToken()
+            newreset.user = user
+            newreset.token = token
+            newreset.save()
+
+            return redirect('home-page')
+        except:
+            context['message'] = 'email ของคุณไม่มีในระบบกรุณาตรวจสอบหรือสมัครสมาชิกใหม่'
+
+    return render(req, 'company/reset_password.html', context)
