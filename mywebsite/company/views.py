@@ -181,7 +181,7 @@ def RessetPassword(req):
             # https://uncleshop.com/reset-new-password/{รหัส token}
             
             email = username
-            context['message'] = 'กรุณาตรวจสอบ email:{} เพื่อกดรีเซ็ต password'.format(email)
+            context['message'] = 'กรุณาตรวจสอบ email: {} เพื่อกดรีเซ็ต password'.format(email)
         except:
             context['message'] = 'email ของคุณไม่มีในระบบกรุณาตรวจสอบหรือสมัครสมาชิกใหม่'
 
