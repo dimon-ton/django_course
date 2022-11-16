@@ -6,6 +6,8 @@ from .emailSystem import sendthai
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import uuid
+
 
 # Create your views here.
 # def Home(req):
@@ -151,7 +153,7 @@ def ProfilePage(req):
     context['profile'] = profileuser
     return render(req, 'company/profile.html', context)
 
-import uuid
+
 def RessetPassword(req):
 
     context = {}
@@ -173,8 +175,45 @@ def RessetPassword(req):
             newreset.token = token
             newreset.save()
 
-            return redirect('home-page')
+            print(token)
+
+            sendthai(username, 'reset password link เรียน Django','กรุณากดลิงค์เพื่อ reset password: \nhttp://localhost:8000/reset-new-password/{}'.format(token))
+            # https://uncleshop.com/reset-new-password/{รหัส token}
+            
+            email = username
+            context['message'] = 'กรุณาตรวจสอบ email:{} เพื่อกดรีเซ็ต password'.format(email)
         except:
             context['message'] = 'email ของคุณไม่มีในระบบกรุณาตรวจสอบหรือสมัครสมาชิกใหม่'
 
     return render(req, 'company/reset_password.html', context)
+
+
+def ResetNewPassword(req, token):
+    context = {}
+    print('token: ', token)
+    try:
+        check = ResetPasswordToken.objects.get(token=token)
+
+        if req.method == 'POST':
+            data = req.POST.copy()
+            password1 = data.get('resetpassword1')
+            password2 = data.get('resetpassword2')
+
+            if password1 == password2:
+                user = check.user
+                user.set_password(password1)
+                user.save()
+
+                user = authenticate(username=user.username, password=password1)
+                login(req, user)
+                return redirect('profile-page')
+            else:
+                context['error'] = 'คุณกรอกรหัสไม่ตรงกัน'
+
+
+    except Exception as e:
+        print('error: ', e)
+        context['error'] = 'ลิงค์สำหรับ reset รหัสผ่านของคุณไม่ถูกต้อง กรุณารีเซ็ตใหม่'
+
+
+    return render(req, 'company/reset_new_password.html', context)
