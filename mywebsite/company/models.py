@@ -9,6 +9,8 @@ class Profile(models.Model):
     usertype = models.CharField(max_length=100, default='member')
     point = models.IntegerField(default=0)
     tel = models.CharField(max_length=20, null=True, blank=True)
+    verified = models.BooleanField(default=False)
+    verified_token = models.CharField(max_length=100, default='no token')
 
     def __str__(self):
         return self.user.username

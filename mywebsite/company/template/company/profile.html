@@ -7,6 +7,16 @@
 
 <center>
     <h1>My profile</h1>
+
+        
+        {% if user.profile.verified == False %}
+            <p>กรุณายืนยันอีเมล์เพื่อรับ point 100 point</p>
+        {% endif %}
+    
+ 
+
+
+
 </center>
 
 {% if warning %}
