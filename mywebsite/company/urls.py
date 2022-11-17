@@ -11,4 +11,5 @@ urlpatterns = [
     path('reset-password', RessetPassword, name='reset-password'),
     path('reset-new-password/<str:token>/', ResetNewPassword, name='reset-new-password'),
     path('verify-email/<str:token>/', Verify_Success, name='verify-email'),
+    path('action-detail/<str:cId>/', ActionPage, name='action-page'),
 ]

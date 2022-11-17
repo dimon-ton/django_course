@@ -26,7 +26,7 @@
     {% for contact in allcontact %}
       <tr>
         <th scope="row">{{forloop.counter0}}</th>
-        <td>{{contact.title}}</td>
+        <td><a href="{% url 'action-page' contact.id %}">{{contact.title}}</a></td>
         <td>{{contact.email}}</td>
         <td>{{contact.detail}}</td>
         {% if contact.complete == True %}

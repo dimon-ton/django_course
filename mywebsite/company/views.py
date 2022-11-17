@@ -151,7 +151,7 @@ def Register(req):
 			context['message'] = 'username หรือ password ไม่ถูกต้อง'
 
 		return redirect('profile-page')
-		
+
 	return render(req, 'company/register.html', context)
 
 
@@ -245,3 +245,23 @@ def ResetNewPassword(req, token):
 
 
 	return render(req, 'company/reset_new_password.html', context)
+
+def ActionPage(req, cId):
+	# cId = contactlist ID
+	context = {}
+	contact = ContactList.objects.get(id=cId)
+	context['contact'] = contact
+
+	
+	if req.method == 'POST':
+		data = req.POST.copy()
+		print(data)
+		if 'save' in data:
+			print('save')
+		elif 'delete' in data:
+			print('delete')
+		elif 'completed' in data:
+			print('mark complete')
+
+
+	return render(req, 'company/action.html', context)

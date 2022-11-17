@@ -56,3 +56,11 @@ class ResetPasswordToken(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Action(models.Model):
+    contactlist = models.ForeignKey(ContactList, on_delete=models.CASCADE)
+    action_detail = models.TextField()
+
+
+    def __str__(self):
+        return '%s - %s' % (self.contactlist, self.action_detail)

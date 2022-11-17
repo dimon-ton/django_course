@@ -6,3 +6,4 @@ admin.site.register(Product) # ทำให้แอดมินสามาร�
 admin.site.register(ContactList)
 admin.site.register(Profile)
 admin.site.register(ResetPasswordToken)
+admin.site.register(Action)
