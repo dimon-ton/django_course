@@ -252,16 +252,46 @@ def ActionPage(req, cId):
 	contact = ContactList.objects.get(id=cId)
 	context['contact'] = contact
 
+	try:
+		action = Action.objects.get(contactlist=contact)
+		context['action'] = action
+	except:
+		pass
+
 	
 	if req.method == 'POST':
 		data = req.POST.copy()
+		detail = data.get('detail')
 		print(data)
 		if 'save' in data:
 			print('save')
+			try:
+				check = Action.objects.get(contactlist=contact)
+				check.action_detail = detail
+				check.save()
+				context['action'] = check
+			except:
+				new = Action()
+				new.contactlist = contact
+				new.action_detail = detail
+				new.save()
+				context['action'] = new
+
 		elif 'delete' in data:
 			print('delete')
+			try:
+				# check = Action.objects.get(contactlist=contact)
+				# check.delete()
+				contact.delete()
+				return redirect('accountant-page')
+			except:
+				pass
+
 		elif 'completed' in data:
 			print('mark complete')
+			contact.complete = True
+			contact.save()
+			return redirect('accountant-page')
 
 
 	return render(req, 'company/action.html', context)

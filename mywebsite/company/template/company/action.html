@@ -11,7 +11,15 @@
 </center>
 
 <div class="container">
-    <h3>หัวข้อ: {{contact.title}}</h3>
+    <h3>
+        หัวข้อ: {{contact.title}}
+        {% if contact.complete == True %}
+        <td><i class="fa fa-check" style="font-size:35px;color:green"></i></td>
+        {% else %}
+        <td><i class="fa fa-close" style="font-size:35px;color:red"></i></td>
+        {% endif %}
+    
+    </h3>
     <p>
        อีเมล์: {{contact.email}}<br>
        รายละเอียด: {{contact.detail}}<br>
@@ -22,10 +30,10 @@
 
         <div class="form-group mb-4">
             <label for="detail">ดำเนินการโดย:</label>
-            <textarea class="form-control" rows="5" id="detail" name="detail"></textarea>
+            <textarea class="form-control" rows="5" id="detail" name="detail">{{action.action_detail}}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary me-2" name="save">บันทึกข้อมูล</button>
+        <button type="submit" class="btn btn-primary me-2" name="save" onclick='alert("บันทึข้อมูลเรียบร้อย")'>บันทึกข้อมูล</button>
         <button type="submit" class="btn btn-danger me-2" name="delete">ลบข้อมูล</button>
         <button type="submit" class="btn btn-success me-2" name="completed">ดำเนินการเสร็จแล้ว</button>
     </form>
