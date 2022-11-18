@@ -18,7 +18,9 @@ from django.urls import path, include
 from django.contrib.auth import views
 from company.views import Login
 
-
+# Add static for image field
+from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
+from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,3 +30,6 @@ urlpatterns = [
     path('login/', Login, name='login'),
     path('logout/', views.LogoutView.as_view(template_name='company/logout.html'), name='logout'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

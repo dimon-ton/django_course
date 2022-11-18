@@ -1,0 +1,82 @@
+
+{% extends 'company/base.html' %}
+
+{% block title %} เพิ่มรายการสินค้า {% endblock title %}
+
+<!-- 
+title = models.CharField(max_length=200)
+description = models.TextField(null=True, blank=True)
+price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+quantity = models.IntegerField(default=1,null=True, blank=True)
+instock = models.BooleanField(default=True)
+ -->
+
+{% block content %}
+
+<center>
+    <h1>เพิ่มรายการสินค้า</h1>
+</center>
+
+{% if warning %}
+    <div class="alert alert-warning" role="alert">
+        <p>{{warning}}</p>
+    </div>
+{% endif %}
+
+
+{% if message %}
+
+    <h2>{{ message }}</h2>
+
+{% else %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+
+        <div class="form-group mb-2">
+            <label for="productname">ชื่อสินค้า</label>
+            <input type="text" class="form-control" id="productname" name="productname" required>
+        </div>
+
+        
+        <div class="form-group mb-2">
+            <label for="detail">รายละเอียดสินค้า</label>
+            <textarea class="form-control", rows="5", id="detail", name="detail", placeholder="กรุณากรอกรายละเอียดสินค้า"></textarea>
+        </div>
+        
+        <div class="form-group mb-2">
+            <label for="price">ราคา</label>
+            <input type="number" class="form-control" id="price" name="price" required>
+        </div>
+        
+        <div class="form-group mb-2">
+            <label for="quantity">จำนวน</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" value="1" required>
+        </div>
+        
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="instock" id="instock" name="instock">
+            <label class="form-check-label" for="instock">
+              มีใน Stock หรือไม่
+            </label>
+          </div>
+
+
+        <div class="form-group mb-3">
+            <label for="picture">กรุณาอัพโหลดไฟล์รูปภาพ</label>
+            <input type="file" class="form-control-file" id="picture" name="picture">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="relatedFile">ไฟล์ที่เกี่ยวข้อง</label>
+            <input type="file" class="form-control-file" id="relatedFile" name="relatedFile">
+        </div>
+
+        <button type="submit" class="btn btn-primary">เพิ่มสินค้า</button>
+    </form>
+
+{% endif %}
+
+
+
+{% endblock content %}

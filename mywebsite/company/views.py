@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 import uuid
 
+from django.core.files.storage import FileSystemStorage
+
 
 # Create your views here.
 # def Home(req):
@@ -295,3 +297,44 @@ def ActionPage(req, cId):
 
 
 	return render(req, 'company/action.html', context)
+
+# add product
+
+def Addproduct(req):
+
+	if req.method == 'POST':
+		data = req.POST.copy()
+		title = data.get('productname')
+		detail = data.get('detail')
+		price = data.get('price')
+		quantity = data.get('quantity')
+		instock = data.get('instock')
+
+		print(title)
+		print(detail)
+		print(price)
+		print(quantity)
+		print(instock)
+		print('file: ', req.FILES)
+
+		new = Product()
+		new.title = title
+		new.description  = detail
+		new.price = float(price)
+		new.quantity = int(quantity)
+		if instock == 'instock':
+			new.instock = True
+
+		if 'picture' in req.FILES:
+			file_image = req.FILES['picture']
+			file_image_name = file_image.name.replace(' ','')
+			# from django.core.files.storage import FileSystemStorage
+			fs = FileSystemStorage()
+			filename = fs.save(file_image_name, file_image)
+			upload_file_url = fs.url(filename)
+			print('Picture URL: ', upload_file_url)
+			new.picture = upload_file_url[6:]
+		
+
+
+	return render(req, 'company/add_product.html')

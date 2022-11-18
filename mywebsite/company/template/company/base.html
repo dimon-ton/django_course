@@ -105,6 +105,7 @@
         {% if user.profile.usertype == 'accountant' %}
           <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'accountant-page' %}">รายการติดต่อ</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'addproduct-page' %}">เพิ่มรายการสินค้า</a>
           </nav>
         {% else %}
             <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
