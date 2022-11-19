@@ -8,7 +8,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 import uuid
 
+# File Storage
 from django.core.files.storage import FileSystemStorage
+
+# Paginator
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -16,8 +20,39 @@ from django.core.files.storage import FileSystemStorage
 #     return HttpResponse('<h1>Hello World</h1> <br> <p>นี่คือเว็บไซต์อันแรกของฉัน</p>')
 
 def Home(req):
-	allproduct = Product.objects.all()
+	allproduct = Product.objects.all().order_by('-id')
+	print('allproduct: ', len(allproduct))
+	
+	# pagination
+	product_per_page = 6
+	paginator = Paginator(allproduct, product_per_page)
+	page = req.GET.get('page')
+	allproduct = paginator.get_page(page)
+	print('COUNT: ', len(allproduct))
+
+
+
 	context = {'allproduct':allproduct}
+	# split column into three
+	allrow = []
+	row = []
+	for i, p in enumerate(allproduct):
+		if i % 3 == 0:
+			# all row list would not append when first round is running.
+			if i != 0:
+				allrow.append(row)
+			row = []
+			row.append(p)
+
+		else:
+			row.append(p)
+
+		if i + 1 == len(allproduct):
+			allrow.append(row)
+
+	print('allrow: ', len(allproduct))
+	context['allrow'] = allrow
+
 	return render(req, 'company/home.html', context)
 
 def About(req):
@@ -347,6 +382,4 @@ def Addproduct(req):
 
 		new.save()
 		
-
-
 	return render(req, 'company/add_product.html')
