@@ -32,7 +32,7 @@ class Product(models.Model):
     instock = models.BooleanField(default=True)
     # file
     picture = models.ImageField(upload_to='product', null=True, blank=True)
-    relatedFile = models.ImageField(upload_to='relatedFile', null=True, blank=True)
+    relatedFile = models.FileField(upload_to='product', null=True, blank=True)
 
     def __str__(self):
         return self.title

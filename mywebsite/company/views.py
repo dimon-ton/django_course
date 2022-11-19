@@ -329,11 +329,23 @@ def Addproduct(req):
 			file_image = req.FILES['picture']
 			file_image_name = file_image.name.replace(' ','')
 			# from django.core.files.storage import FileSystemStorage
-			fs = FileSystemStorage()
+			fs = FileSystemStorage(location='media/product')
 			filename = fs.save(file_image_name, file_image)
 			upload_file_url = fs.url(filename)
 			print('Picture URL: ', upload_file_url)
-			new.picture = upload_file_url[6:]
+			new.picture = 'product' + upload_file_url[6:]
+
+		if 'relatedFile' in req.FILES:
+			file_image = req.FILES['relatedFile']
+			file_image_name = file_image.name.replace(' ','')
+			# from django.core.files.storage import FileSystemStorage
+			fs = FileSystemStorage(location='media/product')
+			filename = fs.save(file_image_name, file_image)
+			upload_file_url = fs.url(filename)
+			print('Picture URL: ', upload_file_url)
+			new.relatedFile = 'product' + upload_file_url[6:]
+
+		new.save()
 		
 
 

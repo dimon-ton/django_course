@@ -34,8 +34,15 @@
 {% for pd in allproduct %}
 
   <h2>{{pd.title}}</h2>
+  {% if pd.picture %}
+    <img src="{{pd.picture.url}}" width="300px">
+  {% endif %}
   <p>
     <b>รายละเอียด:</b> {{pd.description}}<br>
+    {% if pd.relatedFile %}
+      Download Spec: <a href="{{pd.relatedFile.url}}">ดาวโหลด</a>
+    {% endif %}
+    <br>
     <b>ราคา:</b> {{pd.price}}<br>
     <b>เหลือใน stock:</b> {{pd.quantity}} <br>
     <hr>
