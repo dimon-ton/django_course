@@ -13,4 +13,7 @@ urlpatterns = [
     path('verify-email/<str:token>/', Verify_Success, name='verify-email'),
     path('action-detail/<str:cId>/', ActionPage, name='action-page'),
     path('add-product', Addproduct, name='addproduct-page'),
+    # AJAX Example
+    path('crud/',  CrudView.as_view(), name='crud_ajax'),
+    path('ajax/crud/create/',  CreateCrudUser.as_view(), name='crud_ajax_create'),
 ]

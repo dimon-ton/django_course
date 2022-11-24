@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.104.2">
-    <title>{% block title %}Pimon Company{% endblock title %}</title>
+    <title>{% block title %} Pimon Company {% endblock title %}</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/pricing/">
 
@@ -84,6 +84,9 @@
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/5.2/examples/pricing/pricing.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    {% block header %} {% endblock header %}
+  
   </head>
   <body>
     
@@ -175,6 +178,7 @@
 </div>
 
 
-    
+    {% block javascript %}
+    {% endblock javascript %}
   </body>
 </html>

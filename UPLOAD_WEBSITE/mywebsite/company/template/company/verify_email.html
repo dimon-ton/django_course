@@ -1,0 +1,24 @@
+
+{% extends 'company/base.html' %}
+
+{% block title %} verify email success {% endblock title %}
+
+{% block content %}
+
+<center>
+    <h1>การยืนยันสมาชิก</h1>
+</center>
+
+{% if error %}
+
+    <h2>{{ error }}</h2>
+
+{% else %}
+
+    <h3>ยินดีต้อนรับสู่เว็บไซต์ Pimon Shop</h3>
+
+{% endif %}
+
+
+
+{% endblock content %}

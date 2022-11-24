@@ -1,0 +1,99 @@
+
+{% extends 'company/base.html' %}
+
+{% block title %}สวัสดีจ้า ยินต้อนรับ สู่เว็บของเรา จ้าาาา{% endblock title %}
+{% load static %}
+
+{% block content %}
+  
+{% if user.profile.usertype == 'vip' %}
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">โปรโมชั่นราคาพิเศษ สำหรับ VIP Member เท่านั้น</h1>
+    <p class="fs-5 text-muted">ตอนนี้ iphone มาใหม่ หากซื้อวันนี้จะได้รับส่วนลดทัน 50%</p>
+  </div>
+{% elif user.profile.usertype == 'vvip' %}
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">โปรโมชั่นราคาพิเศษ สำหรับ VVIP Member เท่านั้น</h1>
+    <p class="fs-5 text-muted">ตอนนี้ iphone มาใหม่ หากซื้อวันนี้จะได้รับส่วนลดทัน 70%</p>
+  </div>
+{% elif user.profile.usertype == 'member' %}
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">โปรโมชั่นราคาพิเศษ สำหรับ Member เท่านั้น</h1>
+    <p class="fs-5 text-muted">ตอนนี้ iphone มาใหม่ หากซื้อวันนี้จะได้รับส่วนลดทัน 40%</p>
+  </div>
+{% else %}
+  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">โปรโมชั่นราคาพิเศษ</h1>
+    <p class="fs-5 text-muted">ตอนนี้ iphone มาใหม่ หากซื้อวันนี้จะได้รับส่วนลดทัน 20%</p>
+  </div>
+{% endif %}
+
+{% comment %}
+  <img src="{% static 'IMG/iphone.png' %}">
+{% endcomment %}
+
+
+{% for row in allrow %}
+  <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+    {% for col in row %}
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">  
+              {% if col.picture %}
+                <img src="{{col.picture.url}}" width="200px" height="190">
+              {% else %}
+                <img src="{% static 'IMG/no-image.jpg' %}" width="200px" height="190">
+
+              {% endif %}
+              </h4>
+              <h4 class="mt-2">{{col.title}}</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{col.price}}<small class="text-muted fw-light"> บาท</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              
+            </ul>
+            <button type="button" class="w-100 btn btn-lg btn-outline-primary">สั่งซื้อ</button>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+
+
+  <ul class="pagination">
+        
+    {% if allproduct.has_previous and allproduct.has_next != True %}
+        <li class="page-item"><a class="page-link" href="?page={{allproduct.previous_page_number}}"> < </a></li>
+        <li class="page-item"><a class="page-link" href="?page={{allproduct.number|add:-1}}">{{allproduct.number|add:-1}}</a></li>
+        <li class="page-item active"><a class="page-link" href="?page={{allproduct.number}}">{{allproduct.number}}</a></li>
+    {% endif %}
+
+
+    {% if allproduct.has_previous and allproduct.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{allproduct.previous_page_number}}"> < </a></li>
+        <li class="page-item"><a class="page-link" href="?page={{allproduct.number|add:-1}}">{{allproduct.number|add:-1}}</a></li>
+        <li class="page-item active"><a class="page-link" href="?page={{allproduct.number}}">{{allproduct.number}}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{allproduct.number|add:1}}">{{allproduct.number|add:1}}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{allproduct.next_page_number}}"> > </a></li>
+    {% endif %}
+
+    {% if allproduct.has_next and allproduct.has_previous != True %}
+        <li class="page-item active"><a class="page-link" href="?page={{allproduct.number}}">{{allproduct.number}}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{allproduct.number|add:1}}">{{allproduct.number|add:1}}</a></li>
+        {% if allproduct.num_pages > 2 %}
+        <li class="page-item"><a class="page-link" href="?page={{allproduct.number|add:2}}">{{allproduct.number|add:2}}</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="?page={{allproduct.next_page_number}}"> > </a></li>
+    {% endif %} 
+    
+    
+
+ </ul> 
+ 
+ <p> หน้า {{allproduct.number}} จาก {{allproduct.paginator.num_pages}} <p></p>
+
+
+    {% endblock content %}

@@ -14,6 +14,10 @@ from django.core.files.storage import FileSystemStorage
 # Paginator
 from django.core.paginator import Paginator
 
+# goto AJAX
+from django.views.generic import ListView, View
+from django.http import JsonResponse
+
 
 # Create your views here.
 # def Home(req):
@@ -383,3 +387,44 @@ def Addproduct(req):
 		new.save()
 		
 	return render(req, 'company/add_product.html')
+
+# AJAX
+
+class CrudView(ListView):
+    model = CrudUser
+    template_name = 'company/crud.html'
+    context_object_name = 'users'
+
+'''
+def CrudView(req):
+	user = CrudUser.objects.all()
+	context = {'users':user}
+	
+	return render(req, 'company/crud.html', context)
+'''
+
+class CreateCrudUser(View):
+    def  get(self, request):
+        name1 = request.GET.get('name', None)
+        address1 = request.GET.get('address', None)
+        age1 = request.GET.get('age', None)
+
+        obj = CrudUser.objects.create(
+            name = name1,
+            address = address1,
+            age = age1
+        )
+
+
+		
+		# obj = CrudUser()
+		# obj.name = name1
+		# obj.save()
+		
+
+        user = {'id':obj.id,'name':obj.name,'address':obj.address,'age':obj.age}
+
+        data = {
+            'user': user
+        }
+        return JsonResponse(data)

@@ -1,0 +1,44 @@
+
+{% extends 'company/base.html' %}
+
+{% block title %} เข้าสู่ระบบ {% endblock title %}
+
+{% block content %}
+
+<center>
+    <h1>เข้าสู่ระบบ</h1>
+</center>
+
+{% if message %}
+
+    <h2>{{ message }}</h2>
+
+{% else %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group mb-2">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username">
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-5">Login</button>
+        <div>
+            <a href="{% url 'register-page' %}">สมัครสมาชิก</a>
+        </div>
+        <div>
+            <a href="{% url 'reset-password' %}">ลืมรหัสผ่าน</a>
+        </div>
+
+    </form>
+
+{% endif %}
+
+
+
+{% endblock content %}
