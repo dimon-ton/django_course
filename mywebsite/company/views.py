@@ -26,7 +26,7 @@ from django.http import JsonResponse
 def Home(req):
 	allproduct = Product.objects.all().order_by('-id')
 	print('allproduct: ', len(allproduct))
-	
+
 	# pagination
 	product_per_page = 6
 	paginator = Paginator(allproduct, product_per_page)
@@ -75,7 +75,7 @@ def Accountant(req):
 	context = {'allcontact':allcontact}
 	return render(req, 'company/accountant.html', context)
 
-  
+
 def Login(req):
 
 	context = {}
@@ -155,7 +155,7 @@ def Register(req):
 
 		print(data)
 
-	   
+
 		try:
 			check = User.objects.get(username=username)
 			context['warning'] = 'email {} ถูกสมัครไปแล้ว กรุณาใช้ email อื่น'.format(username)
@@ -248,7 +248,7 @@ def RessetPassword(req):
 
 			sendthai(username, 'reset password link เรียน Django','กรุณากดลิงค์เพื่อ reset password: \nhttp://localhost:8000/reset-new-password/{}'.format(token))
 			# https://uncleshop.com/reset-new-password/{รหัส token}
-			
+
 			email = username
 			context['message'] = 'กรุณาตรวจสอบ email: {} เพื่อกดรีเซ็ต password'.format(email)
 		except:
@@ -299,7 +299,7 @@ def ActionPage(req, cId):
 	except:
 		pass
 
-	
+
 	if req.method == 'POST':
 		data = req.POST.copy()
 		detail = data.get('detail')
@@ -385,46 +385,75 @@ def Addproduct(req):
 			new.relatedFile = 'product' + upload_file_url[6:]
 
 		new.save()
-		
+
 	return render(req, 'company/add_product.html')
 
 # AJAX
 
 class CrudView(ListView):
-    model = CrudUser
-    template_name = 'company/crud.html'
-    context_object_name = 'users'
+	model = CrudUser
+	template_name = 'company/crud.html'
+	context_object_name = 'users'
 
 '''
 def CrudView(req):
 	user = CrudUser.objects.all()
 	context = {'users':user}
-	
+
 	return render(req, 'company/crud.html', context)
 '''
 
 class CreateCrudUser(View):
+	def  get(self, request):
+		name1 = request.GET.get('name', None)
+		address1 = request.GET.get('address', None)
+		age1 = request.GET.get('age', None)
+
+		obj = CrudUser.objects.create(
+			name = name1,
+			address = address1,
+			age = age1
+		)
+
+		'''
+		obj = CrudUser()
+		obj.name = name1
+		obj.save()
+
+		'''
+
+		user = {'id':obj.id,'name':obj.name,'address':obj.address,'age':obj.age}
+		data = {
+			'user': user
+		}
+		return JsonResponse(data)
+
+class UpdateCrudUser(View):
     def  get(self, request):
+        id1 = request.GET.get('id', None)
         name1 = request.GET.get('name', None)
         address1 = request.GET.get('address', None)
         age1 = request.GET.get('age', None)
 
-        obj = CrudUser.objects.create(
-            name = name1,
-            address = address1,
-            age = age1
-        )
-
-
-		
-		# obj = CrudUser()
-		# obj.name = name1
-		# obj.save()
-		
+        obj = CrudUser.objects.get(id=id1)
+        obj.name = name1
+        obj.address = address1
+        obj.age = age1
+        obj.save()
 
         user = {'id':obj.id,'name':obj.name,'address':obj.address,'age':obj.age}
 
         data = {
             'user': user
+        }
+        return JsonResponse(data)
+
+
+class DeleteCrudUser(View):
+    def  get(self, request):
+        id1 = request.GET.get('id', None)
+        CrudUser.objects.get(id=id1).delete()
+        data = {
+            'deleted': True
         }
         return JsonResponse(data)
